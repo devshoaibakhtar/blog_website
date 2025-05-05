@@ -1,0 +1,409 @@
+/**
+ * Custom JavaScript for Blog Management System
+ */
+
+// Initialize when document is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Initialize Bootstrap popovers
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl);
+    });
+
+    // Automatically close alerts after 5 seconds
+    setTimeout(function() {
+        var alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            var bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        });
+    }, 5000);
+
+    // Comment form validation
+    const commentForm = document.getElementById('commentForm');
+    if (commentForm) {
+        commentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+            const contentField = document.getElementById('content');
+            if (!contentField.value.trim()) {
+                alert('Please enter a comment before submitting.');
+                return;
+            }
+            
+            // Submit the main comment form via AJAX
+            submitCommentForm(this);
+        });
+    }
+
+    // Post form validation
+    const postForm = document.getElementById('postForm');
+    if (postForm) {
+        postForm.addEventListener('submit', function(e) {
+            const title = document.getElementById('title');
+            const content = document.getElementById('content');
+            const taxonomy = document.getElementById('taxonomy');
+            
+            if (!title.value.trim() || !content.value.trim() || !taxonomy.value) {
+                e.preventDefault();
+                alert('Please fill in all required fields before submitting.');
+            }
+        });
+    }
+
+    // Confirmation for delete actions
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(function(button) {
+        button.addEventListener('click', function(e) {
+            if (!confirm('Are you sure you want to delete this item? This action cannot be undone.')) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    // Toggle sidebar in admin panel
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', function() {
+            document.querySelector('.admin-sidebar').classList.toggle('d-none');
+        });
+    }
+    
+    // Copy link functionality
+    const copyLinkButtons = document.querySelectorAll('.copy-link-btn');
+    if (copyLinkButtons.length > 0) {
+        copyLinkButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const postUrl = this.getAttribute('data-post-url');
+                navigator.clipboard.writeText(postUrl).then(
+                    function() {
+                        // Create toast notification
+                        const toastContainer = document.createElement('div');
+                        toastContainer.classList.add('position-fixed', 'bottom-0', 'end-0', 'p-3');
+                        toastContainer.style.zIndex = '11';
+                        
+                        const toastHtml = `
+                            <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="toast-header">
+                                    <i class="fas fa-link me-2"></i>
+                                    <strong class="me-auto">Link Copied</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body">
+                                    Link copied to clipboard!
+                                </div>
+                            </div>
+                        `;
+                        
+                        toastContainer.innerHTML = toastHtml;
+                        document.body.appendChild(toastContainer);
+                        
+                        // Auto-remove toast after 3 seconds
+                        setTimeout(function() {
+                            toastContainer.remove();
+                        }, 3000);
+                    },
+                    function(err) {
+                        console.error('Could not copy text: ', err);
+                        alert('Failed to copy link to clipboard');
+                    }
+                );
+            });
+        });
+    }
+    
+    // Notifications dropdown functionality
+    const notificationsDropdown = document.getElementById('notificationsDropdown');
+    const notificationsContainer = document.getElementById('notificationsContainer');
+    const markAllReadBtn = document.getElementById('markAllNotificationsRead');
+    
+    if (notificationsDropdown && notificationsContainer) {
+        // Load notifications when dropdown is opened
+        notificationsDropdown.addEventListener('show.bs.dropdown', function () {
+            loadNotifications();
+        });
+        
+        // Handle click events within notification container
+        notificationsContainer.addEventListener('click', function(e) {
+            // Check if clicked on mark as read button
+            const markReadBtn = e.target.closest('.notification-mark-read');
+            if (markReadBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const notificationId = markReadBtn.getAttribute('data-id');
+                markNotificationAsRead(notificationId, markReadBtn.closest('.notification-item'));
+                return false;
+            }
+        });
+    }
+    
+    // Mark all notifications as read
+    if (markAllReadBtn) {
+        markAllReadBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            markAllNotificationsAsRead();
+        });
+    }
+
+    // Post like functionality
+    initPostLikes();
+
+    // Initialize comment reply functionality
+    initCommentReplies();
+});
+
+/**
+ * Format date as "time ago"
+ */
+function formatTimeAgo(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = now - date;
+    
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    
+    if (days > 7) {
+        return date.toLocaleDateString();
+    } else if (days > 0) {
+        return days + (days === 1 ? ' day ago' : ' days ago');
+    } else if (hours > 0) {
+        return hours + (hours === 1 ? ' hour ago' : ' hours ago');
+    } else if (minutes > 0) {
+        return minutes + (minutes === 1 ? ' minute ago' : ' minutes ago');
+    } else {
+        return 'Just now';
+    }
+}
+
+/**
+ * Load notifications via AJAX
+ */
+function loadNotifications() {
+    const container = document.getElementById('notificationsContainer');
+    if (!container) return;
+    
+    // Show loading spinner
+    container.innerHTML = `
+        <div class="text-center p-3">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    `;
+    
+    // Fetch notifications
+    fetch(siteUrl + '/?page=notifications', {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.notifications && data.notifications.length > 0) {
+            let html = '';
+            
+            data.notifications.forEach(notification => {
+                let icon = '';
+                let linkUrl = '#';
+                
+                if (notification.type === 'post_approval') {
+                    icon = '<i class="fas fa-check-circle text-success me-2"></i>';
+                    linkUrl = siteUrl + '/?page=view-post&id=' + notification.reference_id;
+                } else if (notification.type === 'post_rejection') {
+                    icon = '<i class="fas fa-times-circle text-danger me-2"></i>';
+                    linkUrl = siteUrl + '/?page=view-post&id=' + notification.reference_id;
+                } else if (notification.type === 'comment') {
+                    icon = '<i class="fas fa-comment text-primary me-2"></i>';
+                    linkUrl = siteUrl + '/?page=view-post&id=' + notification.reference_id + '#comment-' + notification.id;
+                } else if (notification.type === 'profile_update') {
+                    icon = '<i class="fas fa-user-edit text-info me-2"></i>';
+                    linkUrl = siteUrl + '/?page=profile';
+                } else if (notification.type === 'like') {
+                    icon = '<i class="fas fa-heart text-danger me-2"></i>';
+                    linkUrl = siteUrl + '/?page=view-post&id=' + notification.reference_id;
+                } else if (notification.type === 'follow') {
+                    icon = '<i class="fas fa-user-plus text-success me-2"></i>';
+                    linkUrl = siteUrl + '/?page=profile&id=' + notification.reference_id;
+                } else if (notification.type === 'mention') {
+                    icon = '<i class="fas fa-at text-warning me-2"></i>';
+                    linkUrl = siteUrl + '/?page=view-post&id=' + notification.reference_id;
+                } else if (notification.type === 'tag') {
+                    icon = '<i class="fas fa-tag text-secondary me-2"></i>';
+                    linkUrl = siteUrl + '/?page=view-post&id=' + notification.reference_id;
+                } else if (notification.type === 'admin') {
+                    icon = '<i class="fas fa-shield-alt text-danger me-2"></i>';
+                    linkUrl = siteUrl + '/?page=notifications';
+                } else if (notification.type === 'test') {
+                    icon = '<i class="fas fa-bell text-warning me-2"></i>';
+                    linkUrl = '#';
+                } else {
+                    // Default icon for any other types
+                    icon = '<i class="fas fa-bell text-secondary me-2"></i>';
+                }
+                
+                html += `
+                    <a href="${linkUrl}" class="dropdown-item notification-item ${notification.is_read == 0 ? 'unread' : ''}">
+                        <div class="d-flex align-items-center">
+                            ${icon}
+                            <div class="flex-grow-1">
+                                <div class="small">${notification.content}</div>
+                                <div class="small text-muted">${formatTimeAgo(notification.created_at)}</div>
+                            </div>
+                            ${notification.is_read == 0 ? `
+                                <button class="btn btn-sm text-primary notification-mark-read" data-id="${notification.id}">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </a>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Add event listeners to mark-read buttons
+            const markReadButtons = container.querySelectorAll('.notification-mark-read');
+            markReadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const notificationId = this.getAttribute('data-id');
+                    markNotificationAsRead(notificationId, this.closest('.notification-item'));
+                });
+            });
+        } else {
+            container.innerHTML = `
+                <div class="text-center p-4">
+                    <i class="fas fa-bell-slash fa-2x text-muted mb-3"></i>
+                    <p class="text-muted mb-0">No notifications yet</p>
+                </div>
+            `;
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching notifications:', error);
+        container.innerHTML = `
+            <div class="text-center p-3">
+                <p class="text-danger mb-0">Failed to load notifications</p>
+            </div>
+        `;
+    });
+}
+
+/**
+ * Mark a notification as read
+ */
+function markNotificationAsRead(notificationId, element) {
+    if (!notificationId || !element) return;
+    
+    fetch(siteUrl + '/?page=notifications&action=mark-read&id=' + notificationId, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update UI
+            element.classList.remove('unread');
+            const markButton = element.querySelector('.notification-mark-read');
+            if (markButton) {
+                markButton.remove();
+            }
+            
+            // Update notification count
+            updateNotificationCount();
+        }
+    })
+    .catch(error => {
+        console.error('Error marking notification as read:', error);
+    });
+}
+
+/**
+ * Update notification count in badge
+ */
+function updateNotificationCount() {
+    fetch(siteUrl + '/?page=notifications', {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const badge = document.querySelector('#notificationsDropdown .badge');
+        if (data.unreadCount > 0) {
+            if (badge) {
+                badge.textContent = data.unreadCount > 9 ? '9+' : data.unreadCount;
+            } else {
+                const newBadge = document.createElement('span');
+                newBadge.className = 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger';
+                newBadge.textContent = data.unreadCount > 9 ? '9+' : data.unreadCount;
+                
+                const hiddenSpan = document.createElement('span');
+                hiddenSpan.className = 'visually-hidden';
+                hiddenSpan.textContent = 'unread notifications';
+                
+                newBadge.appendChild(hiddenSpan);
+                document.querySelector('#notificationsDropdown').appendChild(newBadge);
+            }
+        } else if (badge) {
+            badge.remove();
+        }
+    })
+    .catch(error => {
+        console.error('Error updating notification count:', error);
+    });
+}
+
+/**
+ * Mark all notifications as read
+ */
+function markAllNotificationsAsRead() {
+    fetch(siteUrl + '/?page=notifications&action=mark-all-read', {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update UI
+            const unreadNotifications = document.querySelectorAll('.notification-item.unread');
+            unreadNotifications.forEach(item => {
+                item.classList.remove('unread');
+                const markButton = item.querySelector('.notification-mark-read');
+                if (markButton) {
+                    markButton.remove();
+                }
+            });
+            
+            // Update badge
+            const badge = document.querySelector('#notificationsDropdown .badge');
+            if (badge) {
+                badge.remove();
+            }
+            
+            // Hide mark all as read button
+            const markAllBtn = document.getElementById('markAllNotificationsRead');
+            if (markAllBtn) {
+                markAllBtn.style.display = 'none';
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error marking all notifications as read:', error);
+    });
+} 

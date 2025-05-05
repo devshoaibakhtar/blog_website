@@ -1,0 +1,57 @@
+/**
+ * Main User CSS File
+ * This file imports all user-specific stylesheets
+ */
+
+/* Import base styles */
+@import 'style.css';
+
+/* Import profile styles */
+@import 'profile.css';
+
+/* Optional styles can be conditionally loaded in specific pages */
+/* Examples:
+@import 'profile.css';
+*/
+
+/* User-specific global styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Enhanced link styling */
+a.custom-link {
+    color: #3490dc;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a.custom-link:hover {
+    color: #1c6be1;
+    text-decoration: underline;
+}
+
+/* Button enhancements */
+.btn-primary {
+    background-color: #3490dc;
+    border-color: #3490dc;
+}
+
+.btn-primary:hover {
+    background-color: #2779bd;
+    border-color: #2779bd;
+}
+
+/* Card improvements */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} 

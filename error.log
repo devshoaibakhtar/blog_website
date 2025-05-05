@@ -1,0 +1,92 @@
+[04-May-2025 09:50:39 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:50:45 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:50:54 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:50:56 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:51:18 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:56:20 Europe/Berlin] Attempting to upload file: Array
+(
+    [name] => cheezious.jpeg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php8F56.tmp
+    [error] => 0
+    [size] => 17638
+)
+
+[04-May-2025 09:56:20 Europe/Berlin] Upload path: C:/xampp/htdocs/blog/uploads/posts
+[04-May-2025 09:56:20 Europe/Berlin] Target file path: C:/xampp/htdocs/blog/uploads/posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 09:56:20 Europe/Berlin] File uploaded successfully: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 09:56:20 Europe/Berlin] Image upload succeeded: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 09:57:05 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 09:57:05 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:57:12 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 09:57:43 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:58:05 Europe/Berlin] Notifications AJAX response - Count: 5 Unread: 1
+[04-May-2025 09:58:11 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 09:58:11 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:58:14 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 09:58:21 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:58:25 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 09:58:25 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:58:36 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 09:58:36 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:59:52 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 09:59:57 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 10:00:05 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 10:00:05 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 10:39:47 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 10:39:47 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 14:55:20 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 14:55:20 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 14:55:24 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 14:55:24 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 14:57:20 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 14:57:20 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 14:57:39 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 14:57:39 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 14:59:22 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 14:59:22 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 14:59:44 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 15:05:38 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 15:05:38 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 15:06:03 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 15:06:17 Europe/Berlin] Fetched 0 photos for user ID: 1
+[04-May-2025 15:06:17 Europe/Berlin] Image path in view: uploads/profile/user_1_1745766521_5771 (1)_processed.jpg
+[04-May-2025 15:06:17 Europe/Berlin] Full image URL: http://localhost/blog/uploads/profile/user_1_1745766521_5771 (1)_processed.jpg
+[04-May-2025 15:07:12 Europe/Berlin] Fetched 0 photos for user ID: 1
+[04-May-2025 15:07:12 Europe/Berlin] Update SQL: UPDATE users SET name = ?, email = ? WHERE id = ?
+[04-May-2025 15:07:12 Europe/Berlin] Update params: Array
+(
+    [0] => Admin
+    [1] => admin@blogmanagement.com
+    [2] => 1
+)
+
+[04-May-2025 15:07:12 Europe/Berlin] Warning: No rows updated for user 1
+[04-May-2025 15:07:12 Europe/Berlin] Sending response: {"success":true,"message":"Profile updated successfully","name":"Admin","email":"admin@blogmanagement.com"}
+[04-May-2025 15:07:18 Europe/Berlin] Fetched 0 photos for user ID: 1
+[04-May-2025 15:07:18 Europe/Berlin] Update SQL: UPDATE users SET name = ?, email = ? WHERE id = ?
+[04-May-2025 15:07:18 Europe/Berlin] Update params: Array
+(
+    [0] => Admin
+    [1] => admin@blogmanagement.com
+    [2] => 1
+)
+
+[04-May-2025 15:07:18 Europe/Berlin] Warning: No rows updated for user 1
+[04-May-2025 15:07:18 Europe/Berlin] Sending response: {"success":true,"message":"Profile updated successfully","name":"Admin","email":"admin@blogmanagement.com"}
+[04-May-2025 15:07:34 Europe/Berlin] Notifications AJAX response - Count: 5 Unread: 2
+[04-May-2025 15:07:51 Europe/Berlin] PHP Warning:  Undefined array key "role" in C:\xampp\htdocs\blog\controllers\admin\users.php on line 8
+[04-May-2025 15:08:03 Europe/Berlin] PHP Warning:  Undefined array key "role" in C:\xampp\htdocs\blog\controllers\admin\users.php on line 8
+[04-May-2025 15:08:17 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 15:08:17 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 15:09:09 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 15:09:09 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 15:09:40 Europe/Berlin] Notifications AJAX response - Count: 5 Unread: 2
+[04-May-2025 15:29:55 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 15:29:55 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 15:30:00 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 15:30:00 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 15:30:06 Europe/Berlin] Featured image path for post 26: posts/68171da466dfa_cheezious.jpeg
+[04-May-2025 15:30:06 Europe/Berlin] Featured image path for post 24: posts/680bc21aebe65_tech.jpeg
+[04-May-2025 15:31:20 Europe/Berlin] Fetched 0 photos for user ID: 7
+[04-May-2025 15:31:51 Europe/Berlin] Fetched 0 photos for user ID: 7

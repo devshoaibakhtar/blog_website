@@ -1,0 +1,18 @@
+/* Admin Panel No Sidebar Styles */
+.admin-container {
+    display: block !important;
+}
+
+.admin-sidebar {
+    display: none !important;
+}
+
+.admin-content {
+    margin-left: 0 !important;
+    padding-left: 20px !important;
+    width: 100% !important;
+}
+
+.sidebar-toggle {
+    display: none !important;
+} 
